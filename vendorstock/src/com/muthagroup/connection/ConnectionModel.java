@@ -13,6 +13,7 @@ try{
 	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 	con1 = DriverManager.getConnection("jdbc:sqlserver://192.168.0.6:1433;databaseName=FOUNDRYERP;user=UDAY;password=12345");	
    
+	
 }
 catch(Exception e)
 {
