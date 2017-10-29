@@ -21,21 +21,37 @@ public class FurnaceStatusDAO {
 	PreparedStatement ps=null;
 	ResultSet rs=null;
 	
-	public String getUserName(FurnaceStatusVO vo) {
-		String userName=null;
+	public byte[] getImage1(FurnaceStatusVO vo) {
+		byte[] byteImage=null;
 		try {
-			con = ConnectionModel.getMIDIServerConnection();
-			ps = con.prepareStatement("select U_Name from user_tbl where U_Id='" + vo.getUserID() + "'");
+			con = ConnectionModel.getLinuxServerConnection();
+			ps = con.prepareStatement("select value from FSPNSTMFPL_MY_IMAGE1_BLB WHERE _TOP_LEVEL_AURI='" + vo.getImageId1() + "'");
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				userName=rs.getString("U_Name");
+				byteImage=rs.getBytes("value");
 			} 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return userName;		
+		
+		return byteImage;
 	}
-
+	public byte[] getImage2(FurnaceStatusVO vo) {
+		byte[] byteImage=null;
+		try {
+			con = ConnectionModel.getLinuxServerConnection();
+			ps = con.prepareStatement("select value from FSPNSTMFPL_MY_IMAGE1_BLB WHERE _TOP_LEVEL_AURI='" + vo.getImageId2() + "'");
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				byteImage=rs.getBytes("value");
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return byteImage;
+	}
+	
 	public void sendMail(FurnaceStatusVO vo) {
 		String host = "send.one.com";
 		String user = "itsupports@muthagroup.com";
@@ -47,9 +63,9 @@ public class FurnaceStatusDAO {
 		// multiple recipients : == >
 		// ********************************************************************************************* 
 		try {
-			String whmsg="A";
-			Process proc = Runtime.getRuntime().exec("yowsup-cli demos -E s40 -c /home/itsupports/yowsup-develop/config -s 919175004128 "+whmsg);
-			String recipients[] = {"udayav@muthagroup.com"};
+			//String whmsg="A";
+			//Process proc = Runtime.getRuntime().exec("yowsup-cli demos -E s40 -c /home/itsupports/yowsup-develop/config -s 919175004128 "+whmsg);
+			String recipients[] = {"udayav@muthagroup.com","mfplmelting@muthagroup.com","kamleshsm@muthagroup.com"};
 			Properties props = System.getProperties();
 			props.put("mail.host", host);
 			props.put("mail.transport.protocol", "smtp");
@@ -68,16 +84,18 @@ public class FurnaceStatusDAO {
 			msg.setSubject(subject);
 			msg.setSentDate(new Date());
 			msg.setContent(
-					"<p><b style='color: #0D265E;'>*** This is an automatically generated email from IT-Tracker ***</b>"
+					"<p><b style='color: #0D265E;'>*** This is an automatically generated email from IT-Supports Auto Mailer ***</b>"
 							+ "</p>"
 							+ "<table border='1' width='100%'><tr style='font-size: 12px; background-color: #acc8cc; border-width: 1px; padding: 8px; border-style: solid;border-color: #729ea5;text-align: center;'>"
-							+ "	<th>Shift</th>" + "	<th>Date </th>" + "	<th>Time</th>" + "	<th>Furnace ID</th>" + "	<th>Status Image</th>" + "</tr>"
+							+ "	<th>Shift</th>" + "	<th>Date </th>" + "	<th>Time</th>" + "	<th>Furnace ID</th>" + "	<th>Supervisor</th>" + "	<th>Slag pit Image</th>" + "	<th>Nali Image</th>" + "</tr>"
 							+ "	<tr style='font-size: 12px;text-align: center;'>"
 							+ "	<td>" + vo.getShift() + "</td>"
 							+ "	<td>" + vo.getDate() + "</td>" 
 							+ "	<td>" + vo.getTime() + "</td>" 
-							+ "	<td>" + vo.getFurnaceId() + "</td>" 
-							+ " <td>" + " <img id='profileImage' width='300' height='200' src='data:image/jpeg;base64," + vo.getStringImage() + "'  > </td>" + "	</tr>"
+						    + "	<td>" + vo.getFurnaceId() + "</td>" 
+							+ "	<td>" + vo.getUser() + "</td>" 
+						    + " <td>" + " <img id='profileImage' width='200' height='100' src='data:image/jpeg;base64," + vo.getStringImage1() + "'  > </td>"
+							+ " <td>" + " <img id='profileImage' width='200' height='100' src='data:image/jpeg;base64," + vo.getStringImage2() + "'  > </td>" + "	</tr>"
 							+ "	</table>"
 							+ " </p><p><b style='color: #330B73;'>Thanks & Regards </b></P><p> Mutha Group Satara </p>"
 							+ "<hr>" + "<p><b>Disclaimer :</b></p>" + "<font face='Times New Roman' size='1'>"
@@ -94,21 +112,5 @@ public class FurnaceStatusDAO {
 			e.printStackTrace();
 		}
 	}
-
-	public byte[] getImage(FurnaceStatusVO vo) {
-		byte[] byteImage=null;
-		try {
-			con = ConnectionModel.getLinuxServerConnection();
-			ps = con.prepareStatement("select value from FNST_MY_IMAGE_BLB where _TOP_LEVEL_AURI='" + vo.getImageId() + "'");
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				byteImage=rs.getBytes("value");
-			} 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return byteImage;
-	}
-
+	
 }

@@ -29,15 +29,17 @@ public static void main(String args[]){
 		}
 	     date=String.valueOf(year)+"/"+String.format("%02d", month)+"/"+String.format("%02d", day);
 		 time=String.format("%02d", hour)+":"+String.format("%02d", minute)+" "+pm_amString;
-	     vo.setUserID(args[0]);
+		 vo.setUser(args[0]);
 		 vo.setFurnaceId(args[1]);
-		 vo.setImageId(args[2]);
+		 vo.setImageId1(args[2]);
+		 vo.setImageId2(args[3]);
 		 vo.setDate(date);
 		 vo.setTime(time);
 		 vo.setShift(new FurnaceStausController().getShift(hours_of_day));
-	     vo.setUser(dao.getUserName(vo));
-	     vo.setByteImage(dao.getImage(vo));
-	     vo.setStringImage(Base64.getEncoder().encodeToString(vo.getByteImage()));
+	     vo.setByteImage1(dao.getImage1(vo));
+	     vo.setByteImage2(dao.getImage2(vo));
+	     vo.setStringImage1(Base64.getEncoder().encodeToString(vo.getByteImage1()));
+	     vo.setStringImage2(Base64.getEncoder().encodeToString(vo.getByteImage2()));
 	     dao.sendMail(vo);
 	}
 

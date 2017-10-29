@@ -1,19 +1,31 @@
 package com.muthagroup.vo;
 
 public class FurnaceStatusVO {
-String userID,user,furnaceId,shift,date,time,imageId,StringImage;
-byte[] byteImage;
-public String getStringImage() {
-	return StringImage;
+String userID,user,furnaceId,shift,date,time,imageId1,imageId2,StringImage1,StringImage2;
+byte[] byteImage1,byteImage2;
+public String getStringImage1() {
+	return StringImage1;
 }
-public void setStringImage(String stringImage) {
-	StringImage = stringImage;
+public void setStringImage1(String stringImage1) {
+	StringImage1 = stringImage1;
 }
-public String getImageId() {
-	return imageId;
+public String getStringImage2() {
+	return StringImage2;
 }
-public void setImageId(String imageId) {
-	this.imageId = imageId;
+public void setStringImage2(String stringImage2) {
+	StringImage2 = stringImage2;
+}
+public String getImageId1() {
+	return imageId1;
+}
+public void setImageId1(String imageId1) {
+	this.imageId1 = imageId1;
+}
+public String getImageId2() {
+	return imageId2;
+}
+public void setImageId2(String imageId2) {
+	this.imageId2 = imageId2;
 }
 public String getUserID() {
 	return userID;
@@ -51,10 +63,16 @@ public String getTime() {
 public void setTime(String time) {
 	this.time = time;
 }
-public byte[] getByteImage() {
-	return byteImage;
+public byte[] getByteImage1() {
+	return byteImage1;
 }
-public void setByteImage(byte[] byteImage) {
-	this.byteImage = byteImage;
+public void setByteImage1(byte[] byteImage1) {
+	this.byteImage1 = byteImage1;
+}
+public byte[] getByteImage2() {
+	return byteImage2;
+}
+public void setByteImage2(byte[] byteImage2) {
+	this.byteImage2 = byteImage2;
 }
 }
